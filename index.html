@@ -1,0 +1,94 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <div style="height: 400px; width: 400px;">
+        <canvas id="myChart"></canvas>
+    </div>
+    
+    <form id="dataForm">
+        <label for="dataValue">Nuevo Valor:</label>
+        <input type="number" id="dataValue" name="dataValue">
+        <label for="dataLabel">Nueva Etiqueta:</label>
+        <input type="text" id="dataLabel" name="dataLabel">
+        <button type="submit">Agregar</button>
+    </form>
+
+    
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    var data = [20, 19, 3, 5, 2, 3];
+    var labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+    const ctx = document.getElementById('myChart');
+    
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            
+            labels: labels,
+            datasets: [{
+                label: '# of Votes',
+                data: data,
+                backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(153, 102, 255)',
+      'rgb(255, 159, 64)',
+      'rgb(201, 203, 207)'
+    ],
+    
+                borderWidth: 1
+            }]
+        },
+        
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+
+    });
+    
+    
+
+    document.getElementById('dataForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var newValue = parseInt(document.getElementById('dataValue').value);
+        var newLabel = document.getElementById('dataLabel').value;
+
+        data.push(newValue);
+        labels.push(newLabel);
+
+        myChart.data.labels = labels;
+        myChart.data.datasets[0].data = data;
+        myChart.update();
+
+        document.getElementById('dataValue').value = '';
+        document.getElementById('dataLabel').value = '';
+    });
+</script>
+
